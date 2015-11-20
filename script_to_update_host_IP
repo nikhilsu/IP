@@ -23,7 +23,7 @@ if [[ "$local_computer" == "0" ]]; then
 	append_to_hosts_file="$ip\tgoserver.com"
 
 else
-	append_to_hosts_file="localhost\tgoserver.com"
+	append_to_hosts_file="127.0.0.1\tgoserver.com"
 
 fi
 
