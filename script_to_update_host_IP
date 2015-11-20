@@ -1,14 +1,31 @@
 #!/bin/bash
 
-arp=`which arp-scan`
+local_computer=0
+mac_address_of_the_goserver="a0:99:9b:0d:96:1d"
 
-if [[ "$arp" == "" ]]; then
-	brew install arp-scan
+mac_addresses=`ifconfig|grep "ether"|awk '{print $2}'`
+
+for mac_address in $mac_addresses; do
+	if [[ "$mac_address" == "$mac_address_of_the_goserver" ]]; then
+		local_computer=1
+	fi
+done
+
+if [[ "$local_computer" == "0" ]]; then
+	arp=`which arp-scan`
+
+	if [[ "$arp" == "" ]]; then
+		brew install arp-scan
+	fi
+
+	ip=`sudo arp-scan --interface=en0 --localnet|grep "$mac_address_of_the_goserver" |awk '{print $1}'`
+
+	append_to_hosts_file="$ip\tgoserver.com"
+
+else
+	append_to_hosts_file="localhost\tgoserver.com"
+
 fi
-
-ip=`sudo arp-scan --interface=en0 --localnet|grep "a0:99:9b:0d:96:1d" |awk '{print $1}'`
-
-append_to_hosts_file="$ip\tgoserver.com"
 
 line_number_in_hosts=`grep -n "goserver.com" /etc/hosts | awk -F ":" '{print $1}'`
  
