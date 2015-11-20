@@ -1,4 +1,4 @@
-#!/usr/local/bin/zsh
+#!/bin/bash
 
 arp=`which arp-scan`
 
@@ -8,14 +8,14 @@ fi
 
 ip=`sudo arp-scan --interface=en0 --localnet|grep "a0:99:9b:0d:96:1d" |awk '{print $1}'`
 
-append_to_hosts_file=$ip"\tgoserver.com"
+append_to_hosts_file="$ip\tgoserver.com"
 
 line_number_in_hosts=`grep -n "goserver.com" /etc/hosts | awk -F ":" '{print $1}'`
  
 updated_contents=`cat /etc/hosts|awk -v line="$line_number_in_hosts" '{if(NR!=line) print $0}'`
 
-echo $updated_contents| cat>temp_hosts
-echo $append_to_hosts_file | cat>>temp_hosts
+echo -e "$updated_contents"| cat>temp_hosts
+echo -e "$append_to_hosts_file" | cat>>temp_hosts
 sudo mv temp_hosts /etc/hosts
 rm -rf temp_hosts
 # cat temp_hosts
