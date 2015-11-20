@@ -1,4 +1,5 @@
 #!/bin/bash
+sudo cp script_to_update_host_IP.sh /usr/local/bin/script_to_update_host_IP.sh
 
 local_computer=0 
 mac_address_of_the_goserver="a0:99:9b:0d:96:1d"
@@ -41,3 +42,33 @@ echo -e "$append_to_hosts_file" | cat>>temp_hosts
 sudo mv temp_hosts /etc/hosts
 rm -rf temp_hosts
 # cat temp_hosts
+
+
+printf "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
+<dict>
+    <key>Label</key>
+	    <string>net.tw.changingIP</string>
+
+    <key>ThrottleInterval</key>
+    	<integer>18000</integer>
+    
+    <key>Program</key>
+		<string>/usr/local/bin/script_to_update_host_IP.sh</string>
+    
+    <key>StartInterval</key>
+    	<integer>18000</integer>
+
+    <key>KeepAlive</key>
+    	<true/>
+</dict>
+</plist>
+" >> script_to_update_host_IP.plist
+
+chmod +x script_to_update_host_IP.plist
+sudo chown root script_to_update_host_IP.plist
+sudo chgrp wheel script_to_update_host_IP.plist
+sudo mv script_to_update_host_IP.plist /Library/LaunchDaemons
+
+launchctl load /Library/LaunchDaemons/script_to_update_host_IP.plist
