@@ -1,6 +1,6 @@
 #!/bin/bash
 
-local_computer=0
+local_computer=0 
 mac_address_of_the_goserver="a0:99:9b:0d:96:1d"
 
 mac_addresses=`ifconfig|grep "ether"|awk '{print $2}'`
@@ -15,7 +15,12 @@ if [[ "$local_computer" == "0" ]]; then
 	arp=`which arp-scan`
 
 	if [[ "$arp" == "" ]]; then
-		brew install arp-scan
+		os=`uname -v|grep "^Darwin"`
+		if [[ "$os" == "" ]]; then
+			sudo apt-get install arp-scan
+		else
+			brew install arp-scan
+		fi
 	fi
 
 	ip=`sudo arp-scan --interface=en0 --localnet|grep "$mac_address_of_the_goserver" |awk '{print $1}'`
@@ -31,7 +36,7 @@ line_number_in_hosts=`grep -n "goserver.com" /etc/hosts | awk -F ":" '{print $1}
  
 updated_contents=`cat /etc/hosts|awk -v line="$line_number_in_hosts" '{if(NR!=line) print $0}'`
 
-echo -e "$updated_contents"| cat>temp_hosts
+echo -e "$updated_contents" | cat>temp_hosts
 echo -e "$append_to_hosts_file" | cat>>temp_hosts
 sudo mv temp_hosts /etc/hosts
 rm -rf temp_hosts
