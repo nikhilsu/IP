@@ -44,7 +44,7 @@ rm -rf temp_hosts
 # cat temp_hosts
 
 
-printf "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+echo -e "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
 <plist version=\"1.0\">
 <dict>
@@ -54,8 +54,10 @@ printf "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     <key>ThrottleInterval</key>
     	<integer>18000</integer>
     
-    <key>Program</key>
-		<string>/usr/local/bin/script_to_update_host_IP.sh</string>
+    <key>ProgramArguments</key>
+        <array>
+                <string>/usr/local/bin/script_to_update_host_IP.sh</string>
+        </array>
     
     <key>StartInterval</key>
     	<integer>18000</integer>
@@ -64,11 +66,10 @@ printf "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     	<true/>
 </dict>
 </plist>
-" >> script_to_update_host_IP.plist
+" |cat>script_to_update_host_IP.plist
 
 chmod +x script_to_update_host_IP.plist
-sudo chown root script_to_update_host_IP.plist
-sudo chgrp wheel script_to_update_host_IP.plist
+sudo chown root:wheel script_to_update_host_IP.plist
 sudo mv script_to_update_host_IP.plist /Library/LaunchDaemons/
 
-launchctl load /Library/LaunchDaemons/script_to_update_host_IP.plist
+sudo launchctl load /Library/LaunchDaemons/script_to_update_host_IP.plist
