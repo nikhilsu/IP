@@ -1,4 +1,12 @@
+#!/bin/bash
+
 sudo cp script_to_update_host_IP.sh /usr/local/bin/script_to_update_host_IP.sh
+
+arp=`which arp-scan`
+
+if [[ "$arp" == "" ]]; then
+        brew install arp-scan
+fi
 
 echo -e "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
@@ -17,6 +25,12 @@ echo -e "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     
     <key>StartInterval</key>
     	<integer>18000</integer>
+
+    <key>StandardErrorPath</key>
+        <string>/tmp/IPerror.err</string>
+
+    <key>StandardOutPath</key>
+        <string>/tmp/IPoutput.out</string>
 
     <key>KeepAlive</key>
     	<true/>
