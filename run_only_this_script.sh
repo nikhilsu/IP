@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo mv script_to_update_host_IP.sh /usr/local/bin/script_to_update_host_IP.sh
+sudo cp script_to_update_host_IP.sh /usr/local/bin/script_to_update_host_IP.sh
 
 arp=`which arp-scan`
 
