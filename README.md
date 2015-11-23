@@ -8,4 +8,4 @@
   
 The script is configured to run as Daemon. Polls for the IP every 5 hours.
 
-# The goserver will run on - www.goserver.com:8153 (make sure to key in the port number)
+## The goserver will run on - www.goserver.com:8153 (make sure to key in the port number)
