@@ -1,7 +1,7 @@
 #!/bin/bash
 
 local_computer=0 
-mac_address_of_the_goserver="a0:99:9b:0d:96:1d"
+mac_address_of_the_goserver="98:5a:eb:ca:95:bb"
 
 local_mac_addresses=`ifconfig|grep "ether"|awk '{print $2}'`
 
