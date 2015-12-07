@@ -16,7 +16,7 @@ echo -e "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 	    <string>com.tw.changingIP</string>
 
     <key>ThrottleInterval</key>
-    	<integer>300</integer>
+    	<integer>200</integer>
     
     <key>ProgramArguments</key>
         <array>
@@ -24,7 +24,7 @@ echo -e "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
         </array>
     
     <key>StartInterval</key>
-    	<integer>300</integer>
+    	<integer>200</integer>
 
     <key>StandardErrorPath</key>
         <string>/tmp/IPerror.err</string>

@@ -22,16 +22,20 @@ else
 	ip="127.0.0.1"
 fi
 
-if [[ "$ip" != "" ]]; then
-	
-	line_number_in_hosts_file_to_be_removed=`grep -n "goserver.com" /etc/hosts | awk -F ":" '{print $1}'`
+add_and_remove_from_file() {
+	line_number_in_hosts_file_to_be_removed=`grep -n "$1" /etc/hosts | awk -F ":" '{print $1}'`
 	updated_hosts_file_contents=`cat /etc/hosts|awk -v line="$line_number_in_hosts_file_to_be_removed" '{if(NR!=line) print $0}'`
-	content_to_be_appended_to_etc_hosts_file="$ip\tgoserver.com"
+	content_to_be_appended_to_etc_hosts_file="$ip\t$1"
 
 	echo -e "$updated_hosts_file_contents" | cat>temp_hosts
 	echo -e "$content_to_be_appended_to_etc_hosts_file" | cat>>temp_hosts
 	sudo mv temp_hosts /etc/hosts
 	rm -rf temp_hosts
+}
+
+
+
+if [[ "$ip" != "" ]]; then
+	add_and_remove_from_file "goserver.com"
+	add_and_remove_from_file "qa-danglay.com"
 fi
-# say "$ip"
-# cat temp_hosts
