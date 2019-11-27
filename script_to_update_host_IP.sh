@@ -1,7 +1,7 @@
 #!/bin/bash
 
 local_computer=0 
-mac_address_of_the_goserver="10:40:f3:94:1b:46"
+mac_address_of_the_goserver="24:ee:9a:d9:e9:91"
 
 local_mac_addresses=`ifconfig|grep "ether"|awk '{print $2}'`
 
@@ -36,6 +36,5 @@ add_and_remove_from_file() {
 
 
 if [[ "$ip" != "" ]]; then
-	add_and_remove_from_file "goserver.com"
-	add_and_remove_from_file "qa-danglay.com"
+	add_and_remove_from_file "dell"
 fi
